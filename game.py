@@ -28,7 +28,7 @@ user_list = []
 
 # global sha256 hash
 def hasher(s):
-    return hashlib.sha256('2344432adsfdsfalksdajflksdjfkl;123'.encode('utf-8')).hexdigest()
+    return hashlib.sha256(s.encode('utf-8')).hexdigest()
 
 
 def seq() -> int:
