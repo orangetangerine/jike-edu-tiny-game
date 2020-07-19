@@ -1,0 +1,78 @@
+syntax = "proto3";
+
+package game;
+option go_package = "protocol/logic/auth";
+
+service Game {
+    rpc Login(LoginReq) returns (LoginResp) {}
+    rpc Register(RegisterReq) returns (RegisterResp) {}
+
+    rpc GetOnlineUsers(GetOnlineUsersReq) returns (GetOnlineUsersResp) {}
+}
+
+message LoginReq {
+    string account = 1;
+    string password = 2;
+}
+
+message LoginResp {
+    UserInfo user_info = 1;
+    int64 balance = 2;
+
+    string token = 10;
+    string refresh_token = 11;
+}
+
+enum Gender {
+    UNKNOWN = 0;
+    FEMALE = 1;
+    MALE = 2;
+}
+
+message UserInfo {
+    uint64 user_id = 1;
+    string account = 2;
+    string nickname = 3;
+    Gender gender = 4;
+}
+
+message RegisterReq {
+    string account = 1;
+    string password = 2;
+    string nickname = 3;
+    Gender gender = 4;
+}
+
+message RegisterResp {
+    uint64 user_id = 1;
+}
+
+message GetOnlineUsersReq {
+
+}
+
+message GetOnlineUsersResp {
+    repeated UserInfo users = 1;
+}
+
+service Battle {
+    rpc BattleLite (BattleLiteReq) returns (BattleLiteResp) {}
+}
+
+message BattleMsg {
+    enum BattleMsgType {
+        TYPE_NONE = 0;
+        TYPE_FIGHT = 1;
+    }
+    BattleMsgType msg_type = 1;
+    string content = 2;
+}
+
+message BattleLiteReq {
+    uint64 target_uid = 1;
+}
+
+message BattleLiteResp {
+    repeated BattleMsg msg = 1;
+}
+
